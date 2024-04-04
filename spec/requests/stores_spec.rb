@@ -13,16 +13,27 @@ require 'rails_helper'
 # sticking to rails and rspec-rails APIs to keep things simple and stable.
 
 RSpec.describe "/stores", type: :request do
-  
   # This should return the minimal set of attributes required to create a valid
   # Store. As you add validations to Store, be sure to
   # adjust the attributes here as well.
+  let(:user) {
+    user = User.new(
+      email: "user@example.com", password: "123456", password_confirmation: "123456"
+    )
+    user.save!
+    user
+  }
+
   let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
+    {name: "Great Restaurant", user: user} 
   }
 
   let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
+   {name: nil}
+  }
+
+  before {
+    sign_in(user)
   }
 
   describe "GET /index" do
