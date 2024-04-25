@@ -38,4 +38,12 @@ class RegistrationsController < ApplicationController
       .permit(:email, :password, :password_confirmation, :role)
   end
 
+  rescue_from User::InvalidToken, with: :not_authorized
+
+  private
+
+  def not_authorized(e)
+    render json: {message: "Nope!"}, status: 401
+  end
+
 end
