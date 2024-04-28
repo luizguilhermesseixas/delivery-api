@@ -1,4 +1,4 @@
-RSpec describe "registrations", type: :request do
+RSpec.describe "registrations", type: :request do
   let(:credential) {
     Credential.create_access(:buyer)
   }
