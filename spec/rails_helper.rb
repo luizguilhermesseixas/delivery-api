@@ -29,11 +29,29 @@ begin
 rescue ActiveRecord::PendingMigrationError => e
   abort e.to_s.strip
 end
+
+module APIRequestHelpers
+  def api_sign_in(user, credential)
+    post(
+      "/sign_in",
+      headers: {
+        "Accept" => "application/json",
+        "X-API-KEY" => credential.key
+      },
+      params: {
+        login: {
+          email: user.email,
+          password: user.password
+        }
+      }
+    )
+    JSON.parse(response.body)
+  end
+end
+
 RSpec.configure do |config|
-  config.include(
-    Devise::Test::IntegrationHelpers,
-    type: :request
-  )
+  config.include Devise::Test::IntegrationHelpers, type: :request
+  config.include APIRequestHelpers, type: :request
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_paths = [
