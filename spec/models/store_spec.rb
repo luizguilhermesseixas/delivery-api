@@ -33,4 +33,20 @@ RSpec.describe Store, type: :model do
     end
   end
 
+  describe "belongs_to" do
+    let(:admin) {
+      User.create!(
+        email: "admin@example.com",
+        password: "123456",
+        password_confirmation: "123456",
+        role: :admin
+      )
+    }
+
+    it "should not belong to admin users" do
+      store = Store.create(name: "store", user: admin)
+      expect(store.errors.full_messages).to eq ["User must exist"]
+    end
+  end
+
 end
