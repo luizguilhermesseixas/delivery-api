@@ -48,6 +48,18 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_25_190021) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  create_table "orders", force: :cascade do |t|
+    t.integer "buyer_id", null: false
+    t.integer "store_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["buyer_id"], name: "index_orders_on_buyer_id"
+    t.index ["store_id"], name: "index_orders_on_store_id"
+  end
+
+  add_foreign_key "orders", "stores"
+  add_foreign_key "orders", "users", column: "buyer_id"
+
   add_foreign_key "products", "stores"
   add_foreign_key "stores", "users"
 end
