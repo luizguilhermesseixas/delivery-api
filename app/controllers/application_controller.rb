@@ -20,7 +20,7 @@ class ApplicationController < ActionController::Base
 
   def check_token!
     if user = authenticate_with_http_token { |t, _| User.from_token(t) }
-      @user = user
+      @user = User.new(id: user[:id], email: user[:email], role: user[:role])
     else
       render json: {message: "Not authorized"}, status: 401 
     end
