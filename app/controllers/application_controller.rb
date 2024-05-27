@@ -32,6 +32,10 @@ class ApplicationController < ActionController::Base
     Credential.find_by(key: request.headers["X-API-KEY"]) || Credential.new
   end
 
+  def buyer?
+    (current_user && current_user.buyer?) && current_credential.buyer?
+  end
+
   def only_buyers!
     is_buyer = (current_user && current_user.buyer?) && current_credential.buyer?
     
