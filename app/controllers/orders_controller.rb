@@ -13,8 +13,8 @@ class OrdersController < ApplicationController
   end
 
   def index
-  @orders = Order.where(buyer: current_user)
-  render json: {orders: @orders}
+    @orders = Order.where(buyer: current_user)
+    render json: {orders: @orders}
   end
 
   private

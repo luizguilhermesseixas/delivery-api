@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   resources :stores
 
   resources :stores do
-    resources :products, only: [:index]
+    resources :products
   end
 
   scope :buyers do

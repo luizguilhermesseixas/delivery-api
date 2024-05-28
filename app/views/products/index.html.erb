@@ -1,0 +1,15 @@
+<h1>Products Listing</h1>
+
+<div>
+  <% @products.each do |product| %>
+    <div>
+      <h3><%= product.title %></h3>
+      <p>Store: <%= product.store.name %></p>
+      <p>Price: <%= number_to_currency(product.price) %></p>
+      <%= link_to 'Show', product %>
+      <%= link_to 'Edit', edit_store_product_path(product) %>
+      <%= link_to 'Destroy', product, method: :delete%>
+    </div>
+    <hr />
+  <% end %>
+</div>
