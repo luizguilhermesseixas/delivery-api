@@ -1,5 +1,5 @@
 class StoresController < ApplicationController
-  skip_forgery_protection only: [:create, :update]
+  skip_forgery_protection only: [:create, :update, :destroy]
   before_action :authenticate!
   before_action :set_store, only: %i[ show edit update destroy ]
 
@@ -26,10 +26,9 @@ class StoresController < ApplicationController
 
   # GET /stores/1/edit
   def edit
-    # if current_user.admin?
-    #   @sellers = User.where(role: :seller)
-    # end
-    @sellers = User.where(role: :seller)
+    if current_user.admin?
+      @sellers = User.where(role: :seller)
+    end
   end
 
   # POST /stores or /stores.json
@@ -68,11 +67,15 @@ class StoresController < ApplicationController
 
   # DELETE /stores/1 or /stores/1.json
   def destroy
-    @store.discard
-
+    
     respond_to do |format|
-      format.html { redirect_to stores_url, notice: "Store was successfully destroyed." }
-      format.json { head :no_content }
+      if @store.discard
+        format.html { redirect_to stores_url, notice: "Store was successfully destroyed." }
+        format.json { render json: { message: "Store was successfully destroyed." }, status: :ok }
+      else
+        format.html { redirect_to stores_url, alert: "Store could not be destroyed." }
+        format.json { head :unprocessable_entity }
+      end
     end
   end
   

@@ -1,5 +1,5 @@
 class ProductsController < ApplicationController
-  before_action :authenticate!
+  before_action :authenticate!, :set_locale!
   before_action :set_store!, only: [:index, :new, :create, :edit, :update, :destroy, :show]
   before_action :set_product!, only: [:show, :edit, :update, :destroy]
 
