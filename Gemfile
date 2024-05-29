@@ -73,3 +73,5 @@ gem "rack-cors", "~> 2.0"
 gem "state_machines-activerecord", "~> 0.9.0"
 
 gem "kaminari", "~> 1.2"
+
+gem 'discard', "~> 1.2"

@@ -15,8 +15,6 @@
     <%= form.label :name, style: "display: block" %>
     <%= form.text_field :name %>
   </div>
-
-  <div>
     <%= form.submit %>
   </div>
 
@@ -25,6 +23,14 @@
       <%= form.label :seller, style: "display: block" %>
       <%= form.collection_select :user_id, @sellers, :id, :email, prompt: "Sellers..."%>
     </div>
+
+    
+    <%= content_tag :div, class: 'field' do  %>
+      <%= check_box_tag :restore %>
+      <%= label_tag :restore, "Restore this store" %>
+    <% end if store.discarded? %>
+    
+
   <% end %>
 
 <% end %>
