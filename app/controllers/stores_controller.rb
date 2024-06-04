@@ -8,7 +8,7 @@ class StoresController < ApplicationController
     if current_user.admin?
       @stores = Store.includes(:user).all
     else
-      @stores = Store.kept.where(user: current_user)
+      @stores = Store.kept.where(user: current_user).includes(:user)
     end
   end
 
@@ -66,8 +66,7 @@ class StoresController < ApplicationController
   end
 
   # DELETE /stores/1 or /stores/1.json
-  def destroy
-    
+def destroy
     respond_to do |format|
       if @store.discard
         format.html { redirect_to stores_url, notice: "Store was successfully destroyed." }

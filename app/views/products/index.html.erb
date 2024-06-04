@@ -6,9 +6,13 @@
       <h3><%= product.title %></h3>
       <p>Store: <%= product.store.name %></p>
       <p>Price: <%= number_to_currency(product.price) %></p>
-      <%= link_to 'Show', product %>
-      <%= link_to 'Edit', edit_store_product_path(product) %>
-      <%= link_to 'Destroy', product, method: :delete%>
+      <% if current_user.admin? %>
+        <p>Discarded: <%= product.discarded? %></p>
+      <% end %>
+      <%= link_to 'Show', store_product_path(product.store, product) %>
+      <% if current_user.admin? %>
+        <%= link_to 'Edit', edit_store_product_path(product.store, product) %>
+      <% end %>
     </div>
     <hr />
   <% end %>

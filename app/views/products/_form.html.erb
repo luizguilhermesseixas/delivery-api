@@ -26,4 +26,11 @@
   <div class="actions">
     <%= form.submit %>
   </div>
+
+  <% if current_user.admin? %>
+    <%= content_tag :div, class: 'field' do  %>
+      <%= check_box_tag :restore %>
+      <%= label_tag :restore, "Restaurar este produto" %>
+    <% end if @product.discarded? %>
+  <% end %>
 <% end %>

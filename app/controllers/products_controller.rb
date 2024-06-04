@@ -7,9 +7,14 @@ class ProductsController < ApplicationController
   def index
     respond_to do |format|
       format.json do
-        if buyer? || seller?
-          page = params.fetch(:page, 1)
-          @products = Product.where(store_id: params[:store_id]).order(:title).page(page)
+        page = params.fetch(:page, 1)
+        @products = Product.where(store_id: params[:store_id]).order(:title).page(page)
+      end
+      format.html do
+        if current_user.buyer? || current_user.seller?
+          @products = Product.where(store_id: params[:store_id]).kept.order(:title).includes(:store)
+        else
+          @products = Product.where(store_id: params[:store_id]).order(:title).includes(:store)
         end
       end
     end
@@ -59,9 +64,11 @@ class ProductsController < ApplicationController
 
   # PATCH/PUT stores/:store_id/products/:id
   def update
+    @product.undiscard if params.dig(:restore) && current_user.admin?
+
     respond_to do |format|
       if @product.update(product_params)
-        format.html {redirect_to store_products_url(@store, @product), notice: "Product was successfully updated."}
+        format.html { redirect_to store_product_url(@store, @product), notice: "Product was successfully updated." }
         format.json { render :show, status: :ok, location: @product }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -72,6 +79,16 @@ class ProductsController < ApplicationController
   
   # DELETE stores/:store_id/products/:id
   def destroy
+    @product.discard
+    respond_to do |format|
+      if @product.discarded?
+        format.html { redirect_to store_products_url(@store, @product), notice: "Product was successfully destroyed." }
+        format.json { render :show, status: :ok, location: @product}
+      else
+        format.html { redirect_to store_products_url(@store), alert: "Product can't be destroyed." }
+        format.json { render json: { errors: @product.errors }, status: :unprocessable_entity }
+      end
+    end
   end
 
   private

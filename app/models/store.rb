@@ -3,13 +3,16 @@ class Store < ApplicationRecord
 
   belongs_to :user
   has_many :products
-
-  # default_scope -> { kept }
   
   before_discard :discard_products
 
   before_validation :ensure_seller
   validates :name, presence: true, length: { minimum: 3 }
+
+  def undiscard
+    super
+    products.discarded.each(&:undiscard)
+  end
 
   private
 
