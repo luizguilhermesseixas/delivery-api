@@ -23,6 +23,16 @@
     <%= form.text_field :price %>
   </div>
 
+  <div>
+    <%= form.label :description, style: "display: block" %>
+    <%= form.text_area :description %>
+  </div>
+
+  <div>
+    <%= form.label :image, style: "display: block" %>
+    <%= form.file_field :image %>
+  </div>
+
   <div class="actions">
     <%= form.submit %>
   </div>

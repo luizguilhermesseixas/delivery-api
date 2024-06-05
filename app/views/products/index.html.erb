@@ -4,9 +4,14 @@
   <% @products.each do |product| %>
     <div>
       <h3><%= product.title %></h3>
+      <% if product.image.attached? %>
+        <%= image_tag product.thumbnail_image %>
+      <% end %>
       <p>Store: <%= product.store.name %></p>
       <p>Price: <%= number_to_currency(product.price) %></p>
+      <p>Description: <%= product.description %></p>
       <% if current_user.admin? %>
+        <p>ID: <%= product.id%></p>
         <p>Discarded: <%= product.discarded? %></p>
       <% end %>
       <%= link_to 'Show', store_product_path(product.store, product) %>

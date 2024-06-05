@@ -16,8 +16,13 @@ end
 
 json.products do
     json.array! @products do |product|
-      json.extract! product, :id, :title
+      json.extract! product, :id, :title, :description
       json.price number_to_currency(product.price)
+      if product.image.attached?
+      json.image_urls do
+        json.thumbnail_url rails_blob_url(product.thumbnail_image, only_path: true)
+        json.detail_url rails_blob_url(product.detail_image, only_path: true)
+      end
     end
   end
 end

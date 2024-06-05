@@ -7,14 +7,16 @@ class ProductsController < ApplicationController
   def index
     respond_to do |format|
       format.json do
-        page = params.fetch(:page, 1)
-        @products = Product.where(store_id: params[:store_id]).order(:title).page(page)
+        if current_user.buyer? || current_user.seller?
+          page = params.fetch(:page, 1)
+          @products = Product.where(store_id: params[:store_id]).kept.order(:title).page(page)
+        end
       end
       format.html do
         if current_user.buyer? || current_user.seller?
-          @products = Product.where(store_id: params[:store_id]).kept.order(:title).includes(:store)
+          @products = Product.where(store_id: params[:store_id]).kept.order(:title).includes(:store, [:image_attachment])
         else
-          @products = Product.where(store_id: params[:store_id]).order(:title).includes(:store)
+          @products = Product.where(store_id: params[:store_id]).order(:title).includes(:store, [:image_attachment])
         end
       end
     end
@@ -98,10 +100,10 @@ class ProductsController < ApplicationController
   end
 
   def set_product!
-    @product = @store.products.find(params[:id])
+    @product = @store.products.with_discarded.find(params[:id])
   end
 
   def product_params
-    params.require(:product).permit(:title, :description, :price)
+    params.require(:product).permit(:title, :description, :price, :image)
   end
 end
