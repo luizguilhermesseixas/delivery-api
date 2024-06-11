@@ -106,10 +106,6 @@ GEM
     erubi (1.12.0)
     faker (3.2.3)
       i18n (>= 1.8.11, < 2)
-    faraday (2.9.1)
-      faraday-net_http (>= 2.0, < 3.2)
-    faraday-net_http (3.1.0)
-      net-http
     ffi (1.17.0-aarch64-linux-gnu)
     ffi (1.17.0-arm-linux-gnu)
     ffi (1.17.0-arm64-darwin)
@@ -162,8 +158,6 @@ GEM
     minitest (5.22.2)
     msgpack (1.7.2)
     mutex_m (0.2.0)
-    net-http (0.4.1)
-      uri
     net-imap (0.4.10)
       date
       net-protocol
@@ -234,8 +228,6 @@ GEM
     rake (13.1.0)
     rdoc (6.6.2)
       psych (>= 4.0.0)
-    redis-client (0.22.2)
-      connection_pool
     reline (0.4.3)
       io-console (~> 0.5)
     responders (3.1.1)
@@ -263,11 +255,6 @@ GEM
     ruby2_keywords (0.0.5)
     shoulda-matchers (6.1.0)
       activesupport (>= 5.2.0)
-    sidekiq (7.2.4)
-      concurrent-ruby (< 2)
-      connection_pool (>= 2.3.0)
-      rack (>= 2.2.4)
-      redis-client (>= 0.19.0)
     sprockets (4.2.1)
       concurrent-ruby (~> 1.0)
       rack (>= 2.2.4, < 4)
@@ -300,7 +287,6 @@ GEM
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     uniform_notifier (1.16.0)
-    uri (0.13.0)
     warden (1.2.9)
       rack (>= 2.0.9)
     web-console (4.2.1)
@@ -329,7 +315,6 @@ DEPENDENCIES
   devise (~> 4.9)
   discard (~> 1.2)
   faker
-  faraday (~> 2.9)
   image_processing (~> 1.2)
   importmap-rails
   jbuilder
@@ -342,7 +327,6 @@ DEPENDENCIES
   rspec-rails
   ruby-vips
   shoulda-matchers
-  sidekiq (~> 7.2)
   sprockets-rails
   sqlite3 (~> 1.4)
   state_machines-activerecord (~> 0.9.0)
