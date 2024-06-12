@@ -1,4 +1,5 @@
 class ProductsController < ApplicationController
+  skip_forgery_protection
   before_action :authenticate!, :set_locale!
   before_action :set_store!, only: [:index, :new, :create, :edit, :update, :destroy, :show]
   before_action :set_product!, only: [:show, :edit, :update, :destroy]
@@ -14,9 +15,9 @@ class ProductsController < ApplicationController
       end
       format.html do
         if current_user.buyer? || current_user.seller?
-          @products = Product.where(store_id: params[:store_id]).kept.order(:title).includes(:store, [:image_attachment])
+          @products = Product.where(store_id: params[:store_id]).kept.order(:title).includes(:store, image_attachment: :blob)
         else
-          @products = Product.where(store_id: params[:store_id]).order(:title).includes(:store, [:image_attachment])
+          @products = Product.where(store_id: params[:store_id]).order(:title).includes(:store, image_attachment: :blob)
         end
       end
     end
