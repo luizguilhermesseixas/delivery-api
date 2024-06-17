@@ -20,8 +20,8 @@ json.products do
     json.price number_to_currency(product.price)
     if product.image.attached?
       json.image_urls do
-        json.thumbnail_url rails_blob_url(product.thumbnail_image, only_path: true)
-        json.detail_url rails_blob_url(product.detail_image, only_path: true)
+        json.thumbnail_url rails_blob_url(product.thumbnail_image)
+        json.detail_url rails_blob_url(product.detail_image)
       end
     end
   end

@@ -25,6 +25,18 @@ class ProductsController < ApplicationController
 
   # GET /stores/:store_id/products/:id
   def show
+    respond_to do |format|
+      format.json do
+        if current_user.buyer? || current_user.seller?
+          render :show
+        end
+      end
+      format.html do
+        if current_user.buyer? || current_user.seller?
+          render :show
+        end
+      end
+    end
   end
   
   # GET /stores/:store_id/products/new
