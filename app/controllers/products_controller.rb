@@ -97,8 +97,8 @@ class ProductsController < ApplicationController
     @product.discard
     respond_to do |format|
       if @product.discarded?
-        format.html { redirect_to store_products_url(@store, @product), notice: "Product was successfully destroyed." }
-        format.json { render :show, status: :ok, location: @product}
+        format.html { redirect_to store_product_url(@store, @product), notice: "Product was successfully destroyed." }
+        format.json { render :show, status: :ok}
       else
         format.html { redirect_to store_products_url(@store), alert: "Product can't be destroyed." }
         format.json { render json: { errors: @product.errors }, status: :unprocessable_entity }

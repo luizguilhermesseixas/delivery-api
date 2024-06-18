@@ -16,7 +16,7 @@ end
 
 json.products do
   json.array! @products do |product|
-    json.extract! product, :id, :title, :description
+    json.extract! product, :id, :title, :description, :price, :created_at, :updated_at
     json.price number_to_currency(product.price)
     if product.image.attached?
       json.image_urls do
